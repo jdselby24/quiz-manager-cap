@@ -1,3 +1,28 @@
+import AnswerViewer from "./AnswerViewer/AnswerViewer";
+
+const generateQuizAnswerViewerHtml = (quizes, quizName) => {
+    const questionsHtml = [];
+    const quiz = quizes[quizName];
+    
+    quiz.forEach(question => {
+
+        const answersHtml = [];
+
+        answersHtml.push(<AnswerViewer answers={question.answers}></AnswerViewer>)
+
+        questionsHtml.push(
+            <div className="question">
+                <p>{question.title}</p>
+                <div className="question-answers">
+                        {answersHtml}
+                </div>
+            </div>
+        )
+    });
+
+    return questionsHtml;
+};
+
 const QuizAnswersViewer = (props) => {
 
     const quizes = {
@@ -37,51 +62,9 @@ const QuizAnswersViewer = (props) => {
                 ]
             }
         ]
-    }
-
-    const questionsHtml = [];
-
-    const generateQuizAnswerViewerHtml = (quizName) => {
-        const quiz = quizes[quizName];
-        
-        quiz.forEach(question => {
-
-            const answersHtml = [];
-            const answers = question.answers;
-
-            question.answers.sort(answerSorter);
-
-            answers.forEach(answer => {
-                answersHtml.push(
-                    <div className="answer">
-                        <p>{answer.index}</p>
-                        <p>{answer.text}</p>
-                    </div>
-                );
-            });
-
-            questionsHtml.push(
-                <div className="question">
-                    <p>{question.title}</p>
-                    <div className="question-answers">
-                            {answersHtml}
-                    </div>
-                </div>
-            )
-        });
     };
 
-    const answerSorter = (a,b) => {
-        if (a.index < b.index) {
-            return -1;
-        }
-        if (a.index > b.index) {
-            return 1;
-        }
-        return 0;
-    }
-
-    generateQuizAnswerViewerHtml(props.quiz);
+    const questionsHtml = generateQuizAnswerViewerHtml(quizes, props.quiz);
 
     return(
         <div className="quizAnswersViewer">
