@@ -32,7 +32,7 @@ function QuizViewer(props) {
     const questionsHtml = []
 
     // This foreach generates HTML for each question provided by the API for the relevant quiz
-    fetchQuiz("Geography").forEach((question) => {
+    fetchQuiz(props.quizName).forEach((question) => {
         questionsHtml.push(
             <tr>
                 <td>{question.number}</td>
@@ -44,7 +44,7 @@ function QuizViewer(props) {
     // This return renders the HTML for the quiz to currently be displayed
     return (
         <div className="quizViewer">
-            <div className="quizViewerTitle"><p>{props.title}</p></div>
+            <div className="quizViewerTitle"><p>{props.quizName}</p></div>
             <div className="quizViewerContent">
                 <table className="quizViewerContentTable">
                     <tr>
